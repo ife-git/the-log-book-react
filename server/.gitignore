@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Database backups (if any)
+*.db
+*.sqlite
+
+# OS files
+.DS_Store
