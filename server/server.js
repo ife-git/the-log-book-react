@@ -8,6 +8,7 @@ import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
 import { connectDB } from "./config/db.js";
 import cors from "cors";
+import "./events/eventEmitter.js";
 
 // Force Google DNS
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
@@ -50,6 +51,8 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200,
 };
+app.set("trust proxy", 1);
+
 app.use(cors(corsOptions)); // ← Move this up here!
 
 const PORT = process.env.PORT || 8000;
