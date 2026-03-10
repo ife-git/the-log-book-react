@@ -23,7 +23,30 @@ const app = express();
 
 // Configure CORS - BEFORE any other middleware!
 const corsOptions = {
-  origin: "https://the-log-book-updated.vercel.app",
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, Postman)
+    if (!origin) return callback(null, true);
+
+    // Allow all Vercel app subdomains and your custom domain if you have one
+    const allowedDomains = [
+      ".vercel.app",
+      "localhost",
+      "127.0.0.1",
+      // Add your custom domain here later if you have one, e.g., 'yourdomain.com'
+    ];
+
+    // Check if the origin ends with any of the allowed domains
+    const isAllowed = allowedDomains.some(
+      (domain) => origin.endsWith(domain) || origin.includes(`://${domain}`),
+    );
+
+    if (isAllowed) {
+      // Reflect the origin sent in the request
+      callback(null, origin);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200,
 };
