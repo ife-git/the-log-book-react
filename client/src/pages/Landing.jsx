@@ -5,6 +5,7 @@ function Landing({ user, setUser }) {
   const [motivation, setMotivation] = useState("");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // Fetch motivational message
   useEffect(() => {
@@ -16,7 +17,7 @@ function Landing({ user, setUser }) {
 
   const fetchMotivation = async () => {
     try {
-      const response = await fetch("/api/motivation");
+      const response = await fetch(`${API_URL}/motivation`);
       if (!response.ok) throw new Error("Failed to fetch");
       const data = await response.json();
       setMotivation(data.motif);
@@ -30,7 +31,7 @@ function Landing({ user, setUser }) {
 
   const handleLogout = async () => {
     try {
-      await fetch("/api/auth/logout", {
+      await fetch(`${API_URL}/auth/logout`, {
         method: "GET",
         credentials: "include",
       });

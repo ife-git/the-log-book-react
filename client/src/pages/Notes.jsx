@@ -6,6 +6,7 @@ function Notes({ user, setUser }) {
   const [loading, setLoading] = useState(true);
   const [expandedCards, setExpandedCards] = useState({});
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // Load notes on component mount
   useEffect(() => {
@@ -15,7 +16,7 @@ function Notes({ user, setUser }) {
   const loadNotes = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/notes", {
+      const res = await fetch(`${API_URL}/notes`, {
         credentials: "include",
       });
 
@@ -51,7 +52,7 @@ function Notes({ user, setUser }) {
     // Add this one line if you want confirmation
     // if (!window.confirm("Delete this note?")) return;
     try {
-      const res = await fetch(`/api/notes/${noteId}`, {
+      const res = await fetch(`${API_URL}/notes/${noteId}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -67,7 +68,7 @@ function Notes({ user, setUser }) {
 
   const handleLogout = async () => {
     try {
-      await fetch("/api/auth/logout", {
+      await fetch(`${API_URL}/auth/logout`, {
         method: "GET",
         credentials: "include",
       });

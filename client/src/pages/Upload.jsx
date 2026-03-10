@@ -14,6 +14,7 @@ function Upload({ user, setUser }) {
 
   const navigate = useNavigate();
   const { id } = useParams(); // Get note ID from URL if editing
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // Check if we're editing an existing note
   useEffect(() => {
@@ -25,7 +26,7 @@ function Upload({ user, setUser }) {
 
   const loadNoteForEdit = async (noteId) => {
     try {
-      const res = await fetch(`/api/notes/${noteId}`, {
+      const res = await fetch(`${API_URL}/notes/${noteId}`, {
         credentials: "include",
       });
 
@@ -129,7 +130,7 @@ function Upload({ user, setUser }) {
       timestamp: readableDate,
     };
 
-    const url = isEditing ? `/api/notes/${id}` : "/api/notes";
+    const url = isEditing ? `${API_URL}/notes/${id}` : `${API_URL}/notes`;
     const method = isEditing ? "PUT" : "POST";
 
     try {
@@ -191,7 +192,7 @@ function Upload({ user, setUser }) {
 
   const handleLogout = async () => {
     try {
-      await fetch("/api/auth/logout", {
+      await fetch(`${API_URL}/auth/logout`, {
         method: "GET",
         credentials: "include",
       });

@@ -15,10 +15,16 @@ function App() {
     checkAuth();
   }, []);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const checkAuth = async () => {
     try {
-      const res = await fetch("/api/auth/me");
+      const res = await fetch(`${API_URL}/auth/me`, {
+        credentials: "include",
+      });
+
       const data = await res.json();
+
       if (data.isLoggedIn) {
         setUser(data.user);
       }

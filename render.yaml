@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: log-book-backend
+    runtime: node
+    repo: https://github.com/ife-git/the-log-book-react
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: COLLECTION_NAME
+        sync: false
+      - key: GMAIL_USER
+        sync: false
+      - key: GMAIL_APP_PASSWORD
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: BASE_URL
+        value: https://log-book-backend.onrender.com
+      - key: NODE_ENV
+        value: production
+      - key: SEND_EMAILS_DEV
+        value: true
