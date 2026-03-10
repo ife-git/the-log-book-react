@@ -23,8 +23,7 @@ const app = express();
 
 // Configure CORS - BEFORE any other middleware!
 const corsOptions = {
-  origin:
-    "https://the-log-book-updated-akvo9crzm-ifeoluwa-daramolas-projects.vercel.app",
+  origin: "https://the-log-book-updated.vercel.app",
   credentials: true,
   optionsSuccessStatus: 200,
 };
