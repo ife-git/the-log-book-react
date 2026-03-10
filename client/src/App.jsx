@@ -18,7 +18,7 @@ function App() {
 
   const checkAuth = async () => {
     try {
-      const res = await fetch(`${API_URL}/auth/me`, {
+      const res = await fetch(`${API_URL}/api/auth/me`, {
         credentials: "include",
       });
 

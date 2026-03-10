@@ -16,7 +16,7 @@ function Notes({ user, setUser }) {
   const loadNotes = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/notes`, {
+      const res = await fetch(`${API_URL}/api/notes`, {
         credentials: "include",
       });
 
@@ -52,7 +52,7 @@ function Notes({ user, setUser }) {
     // Add this one line if you want confirmation
     // if (!window.confirm("Delete this note?")) return;
     try {
-      const res = await fetch(`${API_URL}/notes/${noteId}`, {
+      const res = await fetch(`${API_URL}/api/notes/${noteId}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -68,7 +68,7 @@ function Notes({ user, setUser }) {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${API_URL}/auth/logout`, {
+      await fetch(`${API_URL}/api/auth/logout`, {
         method: "GET",
         credentials: "include",
       });
