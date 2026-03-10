@@ -6,6 +6,7 @@ import Landing from "./pages/Landing";
 import Notes from "./pages/Notes";
 import Upload from "./pages/Upload";
 import "./App.css";
+import { API_URL } from "../src/config";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -14,8 +15,6 @@ function App() {
   useEffect(() => {
     checkAuth();
   }, []);
-
-  const API_URL = import.meta.env.VITE_API_URL;
 
   const checkAuth = async () => {
     try {

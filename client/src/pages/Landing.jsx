@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { API_URL } from "../config";
 
 function Landing({ user, setUser }) {
   const [motivation, setMotivation] = useState("");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const API_URL = import.meta.env.VITE_API_URL;
 
   // Fetch motivational message
   useEffect(() => {

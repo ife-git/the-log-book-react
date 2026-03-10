@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
+import { API_URL } from "../config";
 
 function Upload({ user, setUser }) {
   const [formData, setFormData] = useState({
@@ -14,7 +15,6 @@ function Upload({ user, setUser }) {
 
   const navigate = useNavigate();
   const { id } = useParams(); // Get note ID from URL if editing
-  const API_URL = import.meta.env.VITE_API_URL;
 
   // Check if we're editing an existing note
   useEffect(() => {

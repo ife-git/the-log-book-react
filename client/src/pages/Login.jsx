@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { API_URL } from "../config";
+console.log("🔐 Login component - using API_URL:", API_URL);
 
 function Login({ setUser }) {
   const [formData, setFormData] = useState({
@@ -8,7 +10,6 @@ function Login({ setUser }) {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -24,7 +25,7 @@ function Login({ setUser }) {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

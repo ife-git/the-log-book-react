@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { API_URL } from "../config";
 
 function Signup({ setUser }) {
   const [formData, setFormData] = useState({
@@ -10,7 +11,6 @@ function Signup({ setUser }) {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
   const handleChange = (e) => {

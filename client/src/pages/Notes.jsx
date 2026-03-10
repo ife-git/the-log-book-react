@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { API_URL } from "../config";
 
 function Notes({ user, setUser }) {
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedCards, setExpandedCards] = useState({});
   const navigate = useNavigate();
-  const API_URL = import.meta.env.VITE_API_URL;
 
   // Load notes on component mount
   useEffect(() => {
