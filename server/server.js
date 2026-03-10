@@ -7,6 +7,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
 import { connectDB } from "./config/db.js";
+import cors from "cors";
 
 // Force Google DNS
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
@@ -16,10 +17,22 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.join(__dirname, ".env") });
 
+// ... your imports ...
+
 const app = express();
+
+// Configure CORS - BEFORE any other middleware!
+const corsOptions = {
+  origin:
+    "https://the-log-book-updated-akvo9crzm-ifeoluwa-daramolas-projects.vercel.app",
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions)); // ← Move this up here!
+
 const PORT = process.env.PORT || 8000;
 
-// Connect to MongoDB - JUST ONCE!
+// Connect to MongoDB
 try {
   await connectDB();
   console.log("✅ MongoDB connected");
@@ -28,7 +41,7 @@ try {
   process.exit(1);
 }
 
-// Middleware
+// THEN other middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -50,6 +63,8 @@ app.use(
     },
   }),
 );
+
+// ... rest of your routes
 
 // Import routes
 import authRoutes from "./routes/auth.js";
