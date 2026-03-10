@@ -17,7 +17,7 @@ function Landing({ user, setUser }) {
 
   const fetchMotivation = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/motivation`);
+      const response = await fetch(`${API_URL}/motivation`);
       if (!response.ok) throw new Error("Failed to fetch");
       const data = await response.json();
       setMotivation(data.motif);
@@ -31,7 +31,7 @@ function Landing({ user, setUser }) {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${API_URL}/api/auth/logout`, {
+      await fetch(`${API_URL}/auth/logout`, {
         method: "GET",
         credentials: "include",
       });

@@ -26,7 +26,7 @@ function Upload({ user, setUser }) {
 
   const loadNoteForEdit = async (noteId) => {
     try {
-      const res = await fetch(`${API_URL}/api/notes/${noteId}`, {
+      const res = await fetch(`${API_URL}/notes/${noteId}`, {
         credentials: "include",
       });
 
@@ -130,9 +130,7 @@ function Upload({ user, setUser }) {
       timestamp: readableDate,
     };
 
-    const url = isEditing
-      ? `${API_URL}/api/notes/${id}`
-      : `${API_URL}/api/notes`;
+    const url = isEditing ? `${API_URL}/notes/${id}` : `${API_URL}/notes`;
     const method = isEditing ? "PUT" : "POST";
 
     try {
@@ -194,7 +192,7 @@ function Upload({ user, setUser }) {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${API_URL}/api/auth/logout`, {
+      await fetch(`${API_URL}/auth/logout`, {
         method: "GET",
         credentials: "include",
       });
