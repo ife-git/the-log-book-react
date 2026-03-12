@@ -1,5 +1,5 @@
 import { EventEmitter } from "node:events";
-import { sendEmail } from "../services/emailService.js";
+import { sendEmail } from "../services/resendService.js";
 
 export const appEvents = new EventEmitter();
 
