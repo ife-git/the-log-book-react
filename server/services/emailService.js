@@ -17,15 +17,17 @@ const appPassword = process.env.GMAIL_APP_PASSWORD
 // Create transporter
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  family: 4, // force IPv4 instead of IPv6
+  port: 587,
+  secure: false, // STARTTLS
+  family: 4, // force IPv4 (important for Render)
   auth: {
     user: process.env.GMAIL_USER,
     pass: appPassword,
   },
+  tls: {
+    rejectUnauthorized: false,
+  },
 });
-
 // Verify connection on startup
 transporter.verify((error, success) => {
   if (error) {
