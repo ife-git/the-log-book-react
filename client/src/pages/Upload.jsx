@@ -302,7 +302,7 @@ function Upload({ user, setUser }) {
           />
 
           {/* Submit Button */}
-          <button type="submit" disabled={loading}>
+          <button type="submit" className="upload-button" disabled={loading}>
             {loading
               ? isEditing
                 ? "Updating..."

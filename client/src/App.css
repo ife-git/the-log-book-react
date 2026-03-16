@@ -744,3 +744,8 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   cursor: pointer !important;
   opacity: 1 !important;
 }
+
+.upload-button {
+  border: 1.5px solid white;
+  border-radius: 10px;
+}
