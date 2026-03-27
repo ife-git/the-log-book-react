@@ -10,6 +10,11 @@ import { connectDB } from "./config/db.js";
 import cors from "cors";
 import "./events/eventEmitter.js";
 
+// ✅ IMPORT ROUTES FIRST (moved from bottom)
+import authRoutes from "./routes/auth.js";
+import noteRoutes from "./routes/notes.js";
+import motivationRoutes from "./routes/motivation.js";
+
 // Force Google DNS
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
@@ -18,31 +23,17 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.join(__dirname, ".env") });
 
-// ... your imports ...
-
 const app = express();
 
 // Configure CORS - BEFORE any other middleware!
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps, curl, Postman)
     if (!origin) return callback(null, true);
-
-    // Allow all Vercel app subdomains and your custom domain if you have one
-    const allowedDomains = [
-      ".vercel.app",
-      "localhost",
-      "127.0.0.1",
-      // Add your custom domain here later if you have one, e.g., 'yourdomain.com'
-    ];
-
-    // Check if the origin ends with any of the allowed domains
+    const allowedDomains = [".vercel.app", "localhost", "127.0.0.1"];
     const isAllowed = allowedDomains.some(
       (domain) => origin.endsWith(domain) || origin.includes(`://${domain}`),
     );
-
     if (isAllowed) {
-      // Reflect the origin sent in the request
       callback(null, origin);
     } else {
       callback(new Error("Not allowed by CORS"));
@@ -52,8 +43,7 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 app.set("trust proxy", 1);
-
-app.use(cors(corsOptions)); // ← Move this up here!
+app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 8000;
 
@@ -83,18 +73,11 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // ⭐ KEY FIX
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       maxAge: 1000 * 60 * 60 * 24 * 14,
     },
   }),
 );
-
-// ... rest of your routes
-
-// Import routes
-import authRoutes from "./routes/auth.js";
-import noteRoutes from "./routes/notes.js";
-import motivationRoutes from "./routes/motivation.js";
 
 // ========== ROUTE ORDER IS CRITICAL ==========
 
@@ -116,9 +99,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // ✅ 4. CATCH-ALL - This MUST be LAST!
-// This serves index.html for any unmatched routes (React routing)
 app.use((req, res) => {
-  // Only serve index.html for non-API routes
   if (!req.path.startsWith("/api/")) {
     res.sendFile(path.join(__dirname, "public/index.html"));
   } else {
