@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import { appEvents } from "../events/eventEmitter.js";
 import validator from "validator";
-import bcrypt from "bcryptjs"; // ← ADD THIS LINE!
+import bcrypt from "bcryptjs";
 
 // @desc    Register a new user
 // @route   POST /api/auth/register
@@ -11,7 +11,7 @@ export async function register(req, res) {
 
     // Validation
     if (!name || !email || !username || !password) {
-      return res.status(400).json({ error: "All fields are required" });
+      return res.status(400).json({ error: "⚠️ All fields are required" });
     }
 
     name = name.trim();
@@ -25,7 +25,7 @@ export async function register(req, res) {
 
     if (existingUser) {
       return res.status(400).json({
-        error: "Email or username already in use",
+        error: "⚠️ Email or username already in use",
       });
     }
 
@@ -48,7 +48,7 @@ export async function register(req, res) {
     appEvents.emit("user:registered", user);
 
     res.status(201).json({
-      message: "User registered successfully",
+      message: "✅ User registered successfully",
       user: {
         id: user._id,
         name: user.name,
@@ -58,10 +58,9 @@ export async function register(req, res) {
     });
   } catch (err) {
     console.error("Register error:", err);
-    res.status(500).json({ error: "Registration failed" });
+    res.status(500).json({ error: "⚠️ Registration failed" });
   }
 }
-// ... rest of your functions
 
 // @desc    Login user
 // @route   POST /api/auth/login
@@ -70,7 +69,9 @@ export async function login(req, res) {
     let { username, password } = req.body;
 
     if (!username || !password) {
-      return res.status(400).json({ error: "Username and password required" });
+      return res
+        .status(400)
+        .json({ error: "⚠️ Username and password required" });
     }
 
     username = username.trim();
@@ -79,14 +80,14 @@ export async function login(req, res) {
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).json({ error: "⚠️ Invalid credentials" });
     }
 
     // Check password (using model method)
     const isValid = await user.comparePassword(password);
 
     if (!isValid) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).json({ error: "⚠️ Invalid credentials" });
     }
 
     // Set session
@@ -96,7 +97,7 @@ export async function login(req, res) {
     appEvents.emit("user:login", user);
 
     res.json({
-      message: "Logged in successfully",
+      message: "✅ Logged in successfully",
       user: {
         id: user._id,
         name: user.name,
@@ -106,7 +107,7 @@ export async function login(req, res) {
     });
   } catch (err) {
     console.error("Login error:", err);
-    res.status(500).json({ error: "Login failed" });
+    res.status(500).json({ error: "⚠️ Login failed" });
   }
 }
 
@@ -115,10 +116,10 @@ export async function login(req, res) {
 export async function logout(req, res) {
   req.session.destroy((err) => {
     if (err) {
-      return res.status(500).json({ error: "Logout failed" });
+      return res.status(500).json({ error: "⚠️ Logout failed" });
     }
     res.clearCookie("connect.sid");
-    res.json({ message: "Logged out successfully" });
+    res.json({ message: "✅ Logged out successfully" });
   });
 }
 
@@ -148,6 +149,6 @@ export async function getMe(req, res) {
     });
   } catch (err) {
     console.error("Get me error:", err);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "⚠️ Server error" });
   }
 }
